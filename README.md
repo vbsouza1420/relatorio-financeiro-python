@@ -1,6 +1,10 @@
 # Relatório Financeiro Automatizado com Python
 
-Projeto de portfólio que transforma movimentações em CSV em um relatório Excel pronto para análise.
+Aplicação Python com interface web que transforma movimentações em CSV em indicadores, gráficos e um relatório Excel pronto para análise.
+
+## Demonstração
+
+A interface permite enviar um CSV, conferir os resultados no navegador e baixar o relatório sem utilizar comandos.
 
 ## Problema resolvido
 
@@ -13,6 +17,8 @@ Conferir receitas e despesas manualmente consome tempo e facilita erros. Este pr
 - calcula receitas, despesas e saldo;
 - resume resultados por categoria e por mês;
 - gera um arquivo Excel formatado;
+- disponibiliza interface web com indicadores e gráficos;
+- permite baixar um modelo CSV e o relatório final;
 - inclui dados de exemplo e testes automatizados.
 
 ## Tecnologias
@@ -20,9 +26,21 @@ Conferir receitas e despesas manualmente consome tempo e facilita erros. Este pr
 - Python 3.11+
 - pandas
 - openpyxl
+- Streamlit
 - pytest
 
-## Como executar
+## Executar a interface web
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+O navegador abrirá a aplicação em `http://localhost:8501`.
+
+## Executar pela linha de comando
 
 ```bash
 python -m venv .venv
@@ -59,9 +77,10 @@ O arquivo gerado contém:
 pytest
 ```
 
+O GitHub Actions também executa os testes automaticamente a cada atualização.
+
 ## Possíveis evoluções
 
-- interface web com Streamlit;
 - importação de arquivos OFX;
 - gráficos e comparações entre períodos;
 - regras personalizadas por cliente.

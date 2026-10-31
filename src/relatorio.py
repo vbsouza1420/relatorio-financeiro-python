@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from io import BytesIO
 from pathlib import Path
+from typing import BinaryIO
 
 import pandas as pd
 from openpyxl.styles import Alignment, Font, PatternFill
@@ -11,7 +13,7 @@ COLUNAS_OBRIGATORIAS = {"data", "descricao", "categoria", "tipo", "valor"}
 TIPOS_VALIDOS = {"receita", "despesa"}
 
 
-def carregar_movimentacoes(caminho: str | Path) -> pd.DataFrame:
+def carregar_movimentacoes(caminho: str | Path | BinaryIO) -> pd.DataFrame:
     """Carrega e valida as movimentações de um arquivo CSV."""
     dados = pd.read_csv(caminho)
     dados.columns = dados.columns.str.strip().str.lower()
@@ -63,6 +65,21 @@ def gerar_relatorio(dados: pd.DataFrame, destino: str | Path) -> Path:
     destino = Path(destino)
     destino.parent.mkdir(parents=True, exist_ok=True)
 
+    with pd.ExcelWriter(destino, engine="openpyxl") as writer:
+        _escrever_relatorio(dados, writer)
+
+    return destino
+
+
+def gerar_relatorio_bytes(dados: pd.DataFrame) -> bytes:
+    """Gera o relatório em memória para download em aplicações web."""
+    memoria = BytesIO()
+    with pd.ExcelWriter(memoria, engine="openpyxl") as writer:
+        _escrever_relatorio(dados, writer)
+    return memoria.getvalue()
+
+
+def _escrever_relatorio(dados: pd.DataFrame, writer: pd.ExcelWriter) -> None:
     resumo = pd.DataFrame(calcular_resumo(dados).items(), columns=["Indicador", "Valor"])
     por_categoria = (
         dados.groupby(["categoria", "tipo"], as_index=False)["valor"]
@@ -81,16 +98,13 @@ def gerar_relatorio(dados: pd.DataFrame, destino: str | Path) -> Path:
     exportacao = dados.copy()
     exportacao["data"] = exportacao["data"].dt.date
 
-    with pd.ExcelWriter(destino, engine="openpyxl") as writer:
-        resumo.to_excel(writer, sheet_name="Resumo", index=False)
-        exportacao.to_excel(writer, sheet_name="Movimentações", index=False)
-        por_categoria.to_excel(writer, sheet_name="Por categoria", index=False)
-        por_mes.to_excel(writer, sheet_name="Por mês", index=False)
+    resumo.to_excel(writer, sheet_name="Resumo", index=False)
+    exportacao.to_excel(writer, sheet_name="Movimentações", index=False)
+    por_categoria.to_excel(writer, sheet_name="Por categoria", index=False)
+    por_mes.to_excel(writer, sheet_name="Por mês", index=False)
 
-        for planilha in writer.book.worksheets:
-            _formatar_planilha(planilha)
-
-    return destino
+    for planilha in writer.book.worksheets:
+        _formatar_planilha(planilha)
 
 
 def _formatar_planilha(planilha) -> None:

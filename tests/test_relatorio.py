@@ -3,7 +3,12 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from src.relatorio import calcular_resumo, carregar_movimentacoes, gerar_relatorio
+from src.relatorio import (
+    calcular_resumo,
+    carregar_movimentacoes,
+    gerar_relatorio,
+    gerar_relatorio_bytes,
+)
 
 
 EXEMPLO = Path("exemplos/movimentacoes.csv")
@@ -38,3 +43,11 @@ def test_gera_todas_as_abas(tmp_path: Path) -> None:
         "Por categoria",
         "Por mês",
     }
+
+
+def test_gera_relatorio_em_memoria() -> None:
+    dados = carregar_movimentacoes(EXEMPLO)
+    conteudo = gerar_relatorio_bytes(dados)
+
+    assert conteudo[:2] == b"PK"
+    assert len(conteudo) > 1_000

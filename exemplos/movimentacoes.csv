@@ -1,0 +1,9 @@
+data,descricao,categoria,tipo,valor
+2026-01-05,Venda de consultoria,Serviços,receita,1500.00
+2026-01-08,Internet,Operacional,despesa,120.90
+2026-01-15,Assinatura de software,Ferramentas,despesa,89.90
+2026-01-20,Criação de relatório,Serviços,receita,850.00
+2026-02-03,Manutenção de sistema,Serviços,receita,1200.00
+2026-02-10,Energia elétrica,Operacional,despesa,210.50
+2026-02-18,Curso de Python,Capacitação,despesa,149.00
+2026-02-25,Automação de planilha,Serviços,receita,980.00

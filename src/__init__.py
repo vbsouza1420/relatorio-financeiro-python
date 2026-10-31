@@ -1,0 +1,1 @@
+"""Automação de relatórios financeiros."""

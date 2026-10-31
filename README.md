@@ -2,6 +2,20 @@
 
 Aplicação Python com interface web que transforma movimentações em CSV em indicadores, gráficos e um relatório Excel pronto para análise.
 
+[![Testes](https://github.com/vbsouza1420/relatorio-financeiro-python/actions/workflows/tests.yml/badge.svg)](https://github.com/vbsouza1420/relatorio-financeiro-python/actions/workflows/tests.yml)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-aplicação-FF4B4B?logo=streamlit&logoColor=white)](https://relatorio-financeiro-victor.streamlit.app/)
+
+## Teste a aplicação
+
+### [Abrir demonstração ao vivo](https://relatorio-financeiro-victor.streamlit.app/)
+
+Não é necessário instalar Python. Baixe o CSV de exemplo na própria aplicação, envie o arquivo e gere o relatório Excel.
+
+> Para preservar sua privacidade, utilize dados fictícios ou sem informações confidenciais na demonstração pública.
+
+![Tela da aplicação Relatório Financeiro](docs/aplicacao.png)
+
 ## Demonstração
 
 A interface permite enviar um CSV, conferir os resultados no navegador e baixar o relatório sem utilizar comandos.
